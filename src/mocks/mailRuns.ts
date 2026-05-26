@@ -1,0 +1,65 @@
+import type { MailRun } from '@/src/types';
+
+export const MAIL_RUNS: MailRun[] = [
+  {
+    id: 'run-001',
+    name: 'Morning Run — Nov 12, 2025',
+    status: 'In_Progress',
+    docCount: 11,
+    createdAt: 'Nov 12, 2025 · 8:00am',
+    createdAtIso: '2025-11-12T08:00',
+    actionedBy: 'J. Smith',
+  },
+  {
+    id: 'run-002',
+    name: 'Afternoon Run — Nov 12, 2025',
+    status: 'Queued',
+    docCount: 8,
+    createdAt: 'Nov 12, 2025 · 2:15pm',
+    createdAtIso: '2025-11-12T14:15',
+    actionedBy: 'J. Smith',
+  },
+  {
+    id: 'run-003',
+    name: 'Morning Run — Nov 11, 2025',
+    status: 'Released',
+    docCount: 24,
+    createdAt: 'Nov 11, 2025 · 8:00am',
+    createdAtIso: '2025-11-11T08:00',
+    releasedAt: 'Nov 11, 2025 · 9:47am',
+    actionedBy: 'J. Smith',
+    dispatchHistory: [
+      { docId: '441875', title: 'Workers Comp Claim — D. Torres',     destination: 'Claims',       destinationFolderId: 'claims',       status: 'Dispatched', timestamp: 'Nov 11, 2025 · 9:44am', pages: 4, currentLocation: ['Claims', 'Jenny Park'],                          labelStatus: 'printed',        lastActivity: 'Nov 11, 2025 · 11:08am' },
+      { docId: '441876', title: 'Payroll Tax Filing Q3',               destination: 'Payroll',      destinationFolderId: 'payroll',      status: 'Dispatched', timestamp: 'Nov 11, 2025 · 9:44am', pages: 6, currentLocation: [],                                                 labelStatus: 'printed',        lastActivity: 'Nov 12, 2025 · 2:14pm',  finalRecipient: { name: 'Sarah Chen', email: 's.chen@acme.com', role: 'Payroll Manager', downloadedAt: 'Nov 12, 2025 · 2:14pm' } },
+      { docId: '441877', title: 'New Employee Enrollment — K. Park',   destination: 'Enrollments',  destinationFolderId: 'enrollments',  status: 'Dispatched', timestamp: 'Nov 11, 2025 · 9:44am', pages: 3, currentLocation: ['Enrollments'],                                    labelStatus: 'skipped',        lastActivity: 'Nov 11, 2025 · 9:44am' },
+      { docId: '441878', title: 'Invoice — Acme Office Supplies',      destination: 'Billing',      destinationFolderId: 'billing',      status: 'Dispatched', timestamp: 'Nov 11, 2025 · 9:45am', pages: 1, currentLocation: [],                                                 labelStatus: 'not_applicable', lastActivity: 'May 15, 2026 · 9:08am',  returnedBy: { name: 'David Liu' }, returnReason: 'Acme account closed in Q4 2025 — needs disposition.' },
+      { docId: '441879', title: 'Site Safety Report — Project Delta',  destination: 'Jobsites',     destinationFolderId: 'jobsites',     status: 'Dispatched', timestamp: 'Nov 11, 2025 · 9:45am', pages: 5, currentLocation: ['Jobsites', 'CA', 'Jobsite A', 'Safety'],          labelStatus: 'printed',        lastActivity: 'May 14, 2026 · 10:22am', returnedBy: { name: 'Jane Doe' },  returnReason: 'Wrong jobsite — belongs to Project Echo, not Delta.' },
+      { docId: '441880', title: 'Health Plan Renewal — Group B',       destination: 'Benefits',     destinationFolderId: 'benefits',     status: 'Dispatched', timestamp: 'Nov 11, 2025 · 9:46am', pages: 2, currentLocation: ['Benefits'],                                       labelStatus: 'skipped',        lastActivity: 'Nov 11, 2025 · 10:55am' },
+      { docId: '441881', title: 'Promotional Mailer — Spring Offers',  destination: 'Junk',                                              status: 'Dispatched', timestamp: 'Nov 11, 2025 · 9:46am', pages: 1, currentLocation: [],                                                 labelStatus: 'not_applicable', lastActivity: 'Nov 11, 2025 · 9:46am',  finalRecipient: { name: 'Auto-archived', downloadedAt: 'Nov 11, 2025 · 9:46am' } },
+      { docId: '441882', title: 'Sales Agreement — Lot 9A',            destination: 'Sales',        destinationFolderId: 'sales',        status: 'Dispatched', timestamp: 'Nov 11, 2025 · 9:47am', pages: 8, currentLocation: ['Sales', 'Mike Torres'],                          labelStatus: 'printed',        lastActivity: 'Nov 13, 2025 · 8:12am' },
+    ],
+    // Two docs from this run bounced all the way back to root level.
+    returnedDocs: [
+      { docId: '441879', title: 'Site Safety Report — Project Delta', sender: 'Project Delta GC',  pages: 5, returnReason: 'Wrong jobsite — belongs to Project Echo, not Delta.', returnedBy: 'Jane Doe',   returnedAt: 'May 14, 2026 · 10:22am' },
+      { docId: '441878', title: 'Invoice — Acme Office Supplies',     sender: 'Acme Office Supplies', pages: 1, returnReason: 'Acme account closed in Q4 2025 — needs disposition.',  returnedBy: 'David Liu',  returnedAt: 'May 15, 2026 · 9:08am' },
+    ],
+  },
+  {
+    id: 'run-004',
+    name: 'Morning Run — Nov 10, 2025',
+    status: 'Released',
+    docCount: 19,
+    createdAt: 'Nov 10, 2025 · 8:00am',
+    createdAtIso: '2025-11-10T08:00',
+    releasedAt: 'Nov 10, 2025 · 9:22am',
+    actionedBy: 'J. Smith',
+    dispatchHistory: [
+      { docId: '441860', title: 'Q3 Invoice — BuildCo Ltd',            destination: 'Billing',      destinationFolderId: 'billing',      status: 'Dispatched', timestamp: 'Nov 10, 2025 · 9:20am', pages: 2, currentLocation: [],                                          labelStatus: 'printed',        lastActivity: 'Nov 10, 2025 · 4:18pm', finalRecipient: { name: 'David Liu', email: 'd.liu@acme.com', role: 'AR Manager', downloadedAt: 'Nov 10, 2025 · 4:18pm' } },
+      { docId: '441861', title: 'Garnishment Order — R. Martinez',     destination: 'Garnishments', destinationFolderId: 'garnishments', status: 'Dispatched', timestamp: 'Nov 10, 2025 · 9:20am', pages: 3, currentLocation: ['Garnishments'],                          labelStatus: 'printed',        lastActivity: 'Nov 10, 2025 · 11:33am' },
+      { docId: '441862', title: 'Benefits Enrollment Update',          destination: 'Benefits',     destinationFolderId: 'benefits',     status: 'Dispatched', timestamp: 'Nov 10, 2025 · 9:21am', pages: 2, currentLocation: [],                                          labelStatus: 'skipped',        lastActivity: 'Nov 10, 2025 · 1:02pm', finalRecipient: { name: 'Lisa Park', email: 'l.park@acme.com', role: 'Benefits Coordinator', downloadedAt: 'Nov 10, 2025 · 1:02pm' } },
+      { docId: '441863', title: 'Equipment Lease Renewal',             destination: 'Jobsites',     destinationFolderId: 'jobsites',     status: 'Dispatched', timestamp: 'Nov 10, 2025 · 9:21am', pages: 4, currentLocation: ['Jobsites', 'CA', 'Jobsite A', 'Operations'], labelStatus: 'printed',        lastActivity: 'Nov 12, 2025 · 9:48am' },
+      { docId: '441864', title: 'Wire Transfer Confirmation',          destination: 'Banking',      destinationFolderId: 'banking',      status: 'Dispatched', timestamp: 'Nov 10, 2025 · 9:22am', pages: 1, currentLocation: [],                                          labelStatus: 'not_applicable', lastActivity: 'Nov 10, 2025 · 9:55am', finalRecipient: { name: 'David Liu', email: 'd.liu@acme.com', role: 'AR Manager', downloadedAt: 'Nov 10, 2025 · 9:55am' } },
+      { docId: '441865', title: 'Cover Letter — J. Adams',             destination: 'Enrollments',  destinationFolderId: 'enrollments',  status: 'Dispatched', timestamp: 'Nov 10, 2025 · 9:22am', pages: 1, currentLocation: ['Enrollments'],                            labelStatus: 'skipped',        lastActivity: 'Nov 10, 2025 · 9:22am' },
+    ],
+  },
+];
