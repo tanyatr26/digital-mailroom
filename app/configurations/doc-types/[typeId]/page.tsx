@@ -6,6 +6,7 @@ import { ChevronLeft, Upload, FileText, X, Sparkles, AlertTriangle, Search } fro
 import { DOCUMENT_TYPES, findDocumentType } from '@/src/mocks/documentTypes';
 import { FOLDERS } from '@/src/mocks/data';
 import { findUser } from '@/src/mocks/users';
+import { useUser } from '@/src/context/UserContext';
 import { useRoleGate } from '@/src/hooks/useRoleGate';
 import type { ExampleDocument, Folder } from '@/src/types';
 
@@ -13,6 +14,7 @@ interface Props { params: Promise<{ typeId: string }> }
 
 export default function DocTypeEditPage({ params }: Props) {
   const allowed = useRoleGate(['System_Admin']);
+  const { user } = useUser();
   const { typeId } = use(params);
   const router = useRouter();
   const original = findDocumentType(typeId) ?? DOCUMENT_TYPES[0];
@@ -31,13 +33,21 @@ export default function DocTypeEditPage({ params }: Props) {
   });
   const [folderSearch, setFolderSearch] = useState('');
   const folderCandidates = useMemo(() => {
-    // Only valid, active folders are selectable — exclude archived and
-    // inactive-admin folders since neither can accept new routing today.
-    let list = FOLDERS.filter(f => !f.is_archived && f.admin_status !== 'inactive_admin');
+    // Scope to the SA's owned folders — same created_by_user_id gate
+    // Folder Assignments + Folder Tree's owned-menu use. Also exclude
+    // archived and inactive-admin folders, plus personal mailboxes
+    // (a doc-type routing hint should land in a group folder, never
+    // funnel every doc of a type into one person's inbox).
+    let list = FOLDERS.filter(f =>
+      f.created_by_user_id === user.id
+      && !f.is_archived
+      && f.admin_status !== 'inactive_admin'
+      && f.recipient_type !== 'personal',
+    );
     const q = folderSearch.trim().toLowerCase();
     if (q) list = list.filter(f => f.name.toLowerCase().includes(q));
     return list.slice(0, 8);
-  }, [folderSearch]);
+  }, [folderSearch, user.id]);
 
   const handleRemoveExample = (id: string) => setExamples(prev => prev.filter(e => e.id !== id));
   const handleAddExample = () => {
