@@ -33,16 +33,14 @@ export default function DocTypeEditPage({ params }: Props) {
   });
   const [folderSearch, setFolderSearch] = useState('');
   const folderCandidates = useMemo(() => {
-    // Scope to the SA's owned folders — same created_by_user_id gate
-    // Folder Assignments + Folder Tree's owned-menu use. Also exclude
-    // archived and inactive-admin folders, plus personal mailboxes
-    // (a doc-type routing hint should land in a group folder, never
-    // funnel every doc of a type into one person's inbox).
+    // Scope to the folders the SA created — same created_by_user_id
+    // gate Folder Assignments + Folder Tree's owned-menu use. Archived
+    // and inactive-admin folders are still filtered since neither can
+    // accept new routing.
     let list = FOLDERS.filter(f =>
       f.created_by_user_id === user.id
       && !f.is_archived
-      && f.admin_status !== 'inactive_admin'
-      && f.recipient_type !== 'personal',
+      && f.admin_status !== 'inactive_admin',
     );
     const q = folderSearch.trim().toLowerCase();
     if (q) list = list.filter(f => f.name.toLowerCase().includes(q));
